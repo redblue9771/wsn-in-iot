@@ -1,65 +1,45 @@
-# Create React App
+# WSN Web
 
-In this example we will be deploying a simple "Hello World" example with Create React App.
+这是一个学校**无线传感网**课程设计项目
 
-### Getting started with Create React App
+## 开始
 
-- Start a new Create React App project:
+课程设计仅仅要求做出参数的显示界面，但是我寻思着能够做的更好，于是走上的部署到云的道路。使用最新的`VS Code`的**Remote-WSL**功能在**Windows**的**Linux**平台下开发
 
-```
-npx create-react-app <project name>
-```
+### 架构设计
 
-### Deploy with Now
+（待添加……）
 
-First we need to create a `now.json` configuration file to instruct Now how to build the project.
+### 技术栈 & 依赖
 
-For this example we will be using our newest version [Now 2.0](https://zeit.co/now).
+* Node.js
+* React.js
+* Material-UI
+* Golang
+* Firebase - Cloud Firestore
 
-By adding the `version` key to the `now.json` file, we can specify which Now Platform version to use.
+### 如何开始
 
-We also need to define each builders we would like to use. [Builders](https://zeit.co/docs/v2/deployments/builders/overview/) are modules that take a deployment's source and return an output, consisting of [either static files or dynamic Lambdas](https://zeit.co/docs/v2/deployments/builds/#sources-and-outputs).
+1. 在`TinyOS`平台构建起无线传感节点（略，参看手册说明）
+2. 基站入网（由于没有无线通信模块，通过串口连接至电脑，由电脑的服务程序统一发往`Firebase`云）
+3. 启动服务
 
-Then we need to add a `now.json` file to specify we want to use our Platform V2.
-
-In this case we are going to use `@now/static-build` to build and deploy our React application selecting the `package.json` as our entry point. We will also define a name for our project (optional).
-
-```json
-{
-    "version": 2,
-    "name": "my-react-app",
-    "builds": [
-        { "src": "package.json", "use": "@now/static-build", "config": { "distDir": "build" } }
-    ],
-    "routes": [
-      { "src": "/static/(.*)", "headers": { "cache-control": "s-maxage=31536000,immutable" }, "dest": "/static/$1" },
-      { "src": "/favicon.ico", "dest": "/favicon.ico" },
-      { "src": "/asset-manifest.json", "dest": "/asset-manifest.json" },
-      { "src": "/manifest.json", "dest": "/manifest.json" },
-      { "src": "/precache-manifest.(.*)", "dest": "/precache-manifest.$1" },
-      { "src": "/service-worker.js", "headers": { "cache-control": "s-maxage=0" }, "dest": "/service-worker.js" },
-      { "src": "/(.*)", "headers": {"cache-control": "s-maxage=0"}, "dest": "/index.html" }
-    ]
-}
-```
-
-Visit our [documentation](https://zeit.co/docs/v2/deployments/configuration) for more information on the `now.json` configuration file.
-
-We also need to include a script in `package.json` named `"now-build"` that specifies what command Now will run on the server to "build" your application. By default, Create React App will output the build to the `build` directory, which is configured in the above `now.json` file.
-
-```json
-{
-    "scripts": {
-        ...
-        "now-build": "react-scripts build"
-    }
-}
-```
-
-We are now ready to deploy the app.
+服务程序位于`server`文件夹，目前只提供二进制文件，可执行 EXE 文件需要自行编译
 
 ```
-now
+./wsn-web
 ```
 
-For more information on deploying a CRA generated React project on Now, [read our Guide](https://zeit.co/guides/deploying-react-with-now-cra).
+启动完成后，切换到根目录执行
+
+```bash
+yarn
+yarn start
+// 仅限于本地测试，部署请直接 yarn build，然后将根目录的 build 文件夹部署到服务器
+```
+
+4. 终端访问`https://wsn-web.redblue.now.sh`
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
