@@ -1,0 +1,13 @@
+{
+  "name": "wsn",
+  "version": "1.0.0",
+  "main": "WebSocket-Server.js",
+  "author": "redblue",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^7.0.0"
+  },
+  "scripts": {
+    "start": "node ."
+  }
+}
