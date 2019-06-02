@@ -28,7 +28,7 @@ function TopBar() {
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="Menu">
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>实时监控</Typography>
+                    <Typography variant="h6" className={classes.title}>物联网实时监控平台</Typography>
                     <Button color="inherit">ABOUT</Button>
                 </Toolbar>
             </AppBar>

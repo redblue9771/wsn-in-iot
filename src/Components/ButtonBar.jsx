@@ -1,17 +1,24 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Fab from '@material-ui/core/Fab';
-import MenuIcon from '@material-ui/icons/Menu';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import AccountDetailsIcon from '@material-ui/icons/Phonelink';
+import CopyrightIcon from '@material-ui/icons/Copyright';
 import CheckIcon from '@material-ui/icons/Check';
 import green from '@material-ui/core/colors/green';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Badge from '@material-ui/core/Badge';
 import clsx from 'clsx';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles(theme => ({
+    link: {
+        margin: 0,
+        padding: 0
+    },
     text: {
         padding: theme.spacing(2, 2, 0),
     },
@@ -62,6 +69,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+
 function ButtonBar() {
     const classes = useStyles();
     const [loading, setLoading] = React.useState(false);
@@ -89,9 +97,12 @@ function ButtonBar() {
     }
     return (
         <AppBar position="fixed" color="primary" className={classes.appBar}>
+            {success ? <LinearProgress color="secondary" /> : <LinearProgress color="secondary" hidden />}
             <Toolbar>
                 <IconButton edge="start" color="inherit" aria-label="Open drawer">
-                    <MenuIcon />
+                    <Badge badgeContent={0} color="secondary">
+                        <AccountDetailsIcon />
+                    </Badge>
                 </IconButton>
                 <Fab className={classes.fabButton}>
                     <Fab color="secondary" className={buttonClassname} onClick={handleButtonClick}>
@@ -100,9 +111,11 @@ function ButtonBar() {
                     {loading && <CircularProgress size={68} className={classes.fabProgress} />}
                 </Fab>
                 <div className={classes.grow} />
-                <IconButton edge="end" color="inherit">
-                    <MoreIcon />
-                </IconButton>
+                <Link href="https://redblue.fun" color="inherit" target="_blank">
+                    <IconButton edge="end" color="inherit">
+                        <CopyrightIcon />
+                    </IconButton>
+                </Link>
             </Toolbar>
         </AppBar>
 
