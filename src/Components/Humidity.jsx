@@ -4,7 +4,7 @@ import "./Humidity.css"
 function Humidity() {
     return (
         <div className="container">
-            <input type='range' min='0' max='32' step='1' value='8' />
+            <input type='range' min='0' max='50' step='1' value='10' defaultValue='0' />
         </div>
     )
 }

@@ -1,5 +1,5 @@
 .container {
-    transform: rotate(-180deg);
+    transform: rotateX(180deg);
 }
 
 .container input[type='range'] {
@@ -10,10 +10,9 @@
     width: 100%;
     height: 5.25em;
     opacity: .65;
-    background: linear-gradient(90deg, #d5cebc 0.125em, rgba(0, 0, 0, 0) 0.125em) repeat-x 0 2.5em content-box;
+    background: linear-gradient(90deg, red 0.125em, rgba(0, 0, 0, 0) 0.125em) repeat-x 0 2.5em content-box;
     background-size: 0.5em 1em;
     font-size: 1em;
-    cursor: pointer;
 }
 
 .container input[type='range'],
@@ -24,14 +23,13 @@
 
 .container input[type='range']::-webkit-slider-runnable-track {
     position: relative;
-    width: 100%;
     height: 1.75em;
-    background: linear-gradient(#d5cebc, #d5cebc) no-repeat 50% 0;
+    background: linear-gradient(#d5cebc, pink) no-repeat 50% 0;
     background-size: 16.125em 0.375em;
 }
 
 .container input[type='range']::-moz-range-track {
-    width: 100%;
+
     height: 1.75em;
     background: linear-gradient(#d5cebc, #d5cebc) no-repeat 50% 0;
     background-size: 16.125em 0.375em;
@@ -40,7 +38,6 @@
 .container input[type='range']::-ms-track {
     margin-left: 0.625em;
     border: none;
-    width: 100%;
     height: 1.75em;
     background: linear-gradient(#d5cebc, #d5cebc) no-repeat 50% 0;
     background-size: 16em 0.375em;
@@ -123,7 +120,7 @@
     position: absolute;
     top: 50%;
     right: 50%;
-    width: 100%;
+
     transform-origin: 100% 0;
     transform: rotate(-45deg) translate(0.0625em, 0.88388em);
     height: 1.75em;
@@ -135,37 +132,10 @@
 }
 
 .container input[type='range']:nth-of-type(1) {
-    color: #68d7c6;
+    color: blueviolet;
 }
 
 .container input[type='range']:nth-of-type(1)::-ms-fill-lower {
-    background: linear-gradient(90deg, currentColor 0.125em, rgba(0, 0, 0, 0) 0.125em) repeat-x 0 100%;
-    background-size: 0.5em 1em;
-}
-
-.container input[type='range']:nth-of-type(2) {
-    color: #7d4d75;
-}
-
-.container input[type='range']:nth-of-type(2)::-ms-fill-lower {
-    background: linear-gradient(90deg, currentColor 0.125em, rgba(0, 0, 0, 0) 0.125em) repeat-x 0 100%;
-    background-size: 0.5em 1em;
-}
-
-.container input[type='range']:nth-of-type(3) {
-    color: #fd625e;
-}
-
-.container input[type='range']:nth-of-type(3)::-ms-fill-lower {
-    background: linear-gradient(90deg, currentColor 0.125em, rgba(0, 0, 0, 0) 0.125em) repeat-x 0 100%;
-    background-size: 0.5em 1em;
-}
-
-.container input[type='range']:nth-of-type(4) {
-    color: #898579;
-}
-
-.container input[type='range']:nth-of-type(4)::-ms-fill-lower {
     background: linear-gradient(90deg, currentColor 0.125em, rgba(0, 0, 0, 0) 0.125em) repeat-x 0 100%;
     background-size: 0.5em 1em;
 }
@@ -179,7 +149,6 @@
 
 .container input[type='range']:not(*:root) {
     overflow: hidden;
-    width: 100%;
     background-position: 0.5625em 2.5em;
 }
 
@@ -187,7 +156,6 @@
 
 _:-ms-.container input-placeholder,
 :root .container input[type='range'] {
-    width: 100%;
     background: repeating-linear-gradient(90deg, #d5cebc, #d5cebc 0.125em, transparent 0.125em, transparent 0.5em) no-repeat 0.625em 2.5em content-box;
     background-size: 16.125em 1em;
 }

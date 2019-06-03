@@ -5,10 +5,11 @@
   "dependencies": {
     "@material-ui/core": "^4.0.1",
     "@material-ui/icons": "^4.0.1",
-    "d3": "^5.9.2",
+    "metrics-graphics": "^2.15.6",
     "notistack": "^0.8.5",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
+    "react-metrics-graphics": "^1.1.2",
     "react-scripts": "3.0.1"
   },
   "scripts": {
