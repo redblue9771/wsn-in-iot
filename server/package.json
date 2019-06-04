@@ -5,6 +5,7 @@
   "author": "redblue",
   "license": "MIT",
   "dependencies": {
+    "@vx/threshold": "^0.0.189",
     "ws": "^7.0.0"
   },
   "scripts": {
