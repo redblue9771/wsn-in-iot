@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Websocket from 'react-websocket';
 
+
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -97,51 +98,64 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
+
+
 function Index() {
     const classes = useStyles();
 
-    const [state, setState] = useState({ count: 0, data: {} });
+    const [state, setState] = useState({ temperature: 0, humidity: 0, light: 0 });
+    const [count, setCount] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [url, setUrl] = useState('ws://localhost:8080/');
 
     const buttonClassname = clsx({
         [classes.buttonSuccess]: loading,
     });
 
-    function getHandle() {
-        fetch("https://qqluqm.coding.io").then(res => res.json()).then(res => console.log(res))
-    }
+    fetch("https://qqluqm.coding.io").then(res => res.json()).then(res => setUrl(res.url))
+
 
     return (
         <React.Fragment >
             <TopBar />
             <Paper className={classes.Paper}>
                 <Typography variant="subtitle1" className={classes.Container}>
-                    <img src={TemperatureIcon} className={classes.Icon} alt="icon" />实时温度 by Temperature Sensor
-                    <Temperature />
+                    <img src={TemperatureIcon} className={classes.Icon} alt="icon" />实时温度 by Temperature Sensor : {`${state.temperature}℃`}
+                    <Temperature total={`${state.temperature}%`} />
                 </Typography>
                 <Divider />
                 <Typography variant="subtitle1" className={classes.Container}>
-                    <img src={HumidityIcon} className={classes.Icon} alt="icon" />实时湿度 by Humidity Sensor</Typography>
-                <Humidity />
+                    <img src={HumidityIcon} className={classes.Icon} alt="icon" />实时湿度 by Humidity Sensor : {`${state.humidity}%`}
+                    <Humidity humidity={state.humidity} />
+                </Typography>
                 <Divider />
                 <Typography variant="subtitle1" className={classes.Container}>
-                    <img src={LightIcon} className={classes.Icon} alt="icon" />实时光亮 by Light Sensor</Typography>
-                <SunIcon />
+                    <img src={LightIcon} className={classes.Icon} alt="icon" />实时光亮 by Light Sensor : {`${state.light}%`}
+                    <SunIcon light={state.light} />
+                </Typography>
             </Paper>
+
             <AppBar position="fixed" color="primary" className={classes.appBar}>
                 {loading && <LinearProgress color="secondary" />}
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="Open drawer">
-                        <Badge badgeContent={state.count} color="secondary">
+                        <Badge badgeContent={count} color="secondary">
                             <AccountDetailsIcon />
                         </Badge>
                     </IconButton>
                     <Fab className={classes.fabButton}>
                         {!loading && <CircularProgress size={68} className={classes.fabProgress} />}
-                        <Fab color="secondary" className={buttonClassname} onClick={getHandle}>
+                        <Fab color="secondary" className={buttonClassname} onClick={() => {
+                            setLoading(!loading);
+                            setCount(0);
+                        }}>
                             {loading ? <CheckIcon /> : "Start"}
                         </Fab>
-                        {loading && <Websocket url='ws://localhost:8080/' onOpen={console.log(1)} onMessage={data => { setState(JSON.parse(data)) }} onClose={console.log('close')} />}
+                        {loading && <Websocket url={url} onMessage={data => {
+                            const tmp = JSON.parse(data);
+                            console.log(tmp)
+                            tmp.type === 0 ? setCount(tmp.count) : setState(tmp);
+                        }} debug={true} />}
                     </Fab>
                     <div className={classes.grow} />
                     <Link href="https://redblue.fun" color="inherit" target="_blank">

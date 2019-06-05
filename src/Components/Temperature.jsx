@@ -1,12 +1,14 @@
 import React from 'react';
 import './Temperature.css'
 
-function Temperature() {
+function Temperature(props) {
     return (
         <div className="thermometer">
-            <span>Now：<strong>38℃</strong></span>
+            {/* <span>Now：<strong>38℃</strong></span> */}
             <div className="glass">
-                <div className="liquid"></div>
+                <div className="liquid">
+                    <div style={{ width: props.total }}></div>
+                </div>
                 <svg className="ruler">
                     <rect x="0px" y="0" width="20%" height="100%" fill="url(#ticks--very-low)" rx="1" />
                     <rect x="20%" y="0" width="20%" height="100%" fill="url(#ticks--low)" rx="1" />
@@ -52,7 +54,7 @@ function Temperature() {
                     </defs>
                 </svg>
             </div>
-        </div>
+        </div >
     )
 }
 

@@ -7,27 +7,41 @@ const WebSocket = require('ws');
 const server = http.createServer();
 const wss1 = new WebSocket.Server({ noServer: true });
 const wss2 = new WebSocket.Server({ noServer: true });
+let count = 0;
 
 wss1.on('connection', function connection(conn) {
-    console.log('1')
-    const a = {
-        count: 1,
-        data: {
-            aaa: 123
+    count++;
+
+
+    wss1.clients.forEach(c => {
+        const data = {
+            type: 1,
+            count: count,
+            temperature: 50,
+            humidity: 50,
+            light: 10
         }
-    }
-    setInterval(function () { conn.send(JSON.stringify(a)) }, 2000);
+        c.send(JSON.stringify(data));
+    })
 
     conn.onmessage = m => {
         wss1.clients.forEach(c => {
             if (c !== conn && c.readyState === WebSocket.OPEN)
                 c.send(m.data);
-            console.log(m.data)
         })
     }
 
     conn.onclose = () => {
+        count--;
         console.log('close')
+        wss1.clients.forEach(c => {
+            const data = {
+                type: 1,
+                temperature: 50
+            }
+            if (c !== conn && c.readyState === WebSocket.OPEN)
+                c.send(JSON.stringify(data));
+        })
     }
 });
 
