@@ -103,8 +103,7 @@ const useStyles = makeStyles(theme => ({
 function Index() {
     const classes = useStyles();
 
-    const [state, setState] = useState({ temperature: 0, humidity: 0, light: 0 });
-    const [count, setCount] = useState(0);
+    const [state, setState] = useState({ count: 0, temperature: 0, humidity: 0, light: 0 });
     const [loading, setLoading] = useState(false);
     const [url, setUrl] = useState('ws://localhost:8080/');
 
@@ -112,8 +111,7 @@ function Index() {
         [classes.buttonSuccess]: loading,
     });
 
-    fetch("https://qqluqm.coding.io").then(res => res.json()).then(res => setUrl(res.url))
-
+    fetch("https://qqluqm.coding.io").then(res => res.json()).then(res => setUrl(res.url));
 
     return (
         <React.Fragment >
@@ -139,23 +137,16 @@ function Index() {
                 {loading && <LinearProgress color="secondary" />}
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="Open drawer">
-                        <Badge badgeContent={count} color="secondary">
+                        <Badge badgeContent={state.count} color="secondary">
                             <AccountDetailsIcon />
                         </Badge>
                     </IconButton>
                     <Fab className={classes.fabButton}>
                         {!loading && <CircularProgress size={68} className={classes.fabProgress} />}
-                        <Fab color="secondary" className={buttonClassname} onClick={() => {
-                            setLoading(!loading);
-                            setCount(0);
-                        }}>
+                        <Fab color="secondary" className={buttonClassname} onClick={() => { setLoading(!loading) }}>
                             {loading ? <CheckIcon /> : "Start"}
                         </Fab>
-                        {loading && <Websocket url={url} onMessage={data => {
-                            const tmp = JSON.parse(data);
-                            console.log(tmp)
-                            tmp.type === 0 ? setCount(tmp.count) : setState(tmp);
-                        }} debug={true} />}
+                        {loading && <Websocket url={url} onMessage={data => { setState(JSON.parse(data)); }} debug={true} />}
                     </Fab>
                     <div className={classes.grow} />
                     <Link href="https://redblue.fun" color="inherit" target="_blank">
