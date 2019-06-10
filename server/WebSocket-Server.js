@@ -1,6 +1,3 @@
-
-
-
 const http = require('http');
 const WebSocket = require('ws');
 
@@ -9,31 +6,35 @@ const wss1 = new WebSocket.Server({ noServer: true });
 const wss2 = new WebSocket.Server({ noServer: true });
 let count = 0;
 
+const getRandomArbitrary = (min, max) => {
+    return Math.random() * (max - min) + min;
+}
+
+const broadcast = (ws) => {
+    ws.clients.forEach(c => {
+        c.send(getRandomArbitrary(0, 100));
+    })
+}
+
 wss1.on('connection', function connection(conn) {
     count++;
+    // setInterval(() => {
+    //     broadcast(wss1);
+    // }, 1000);
 
-
-    wss1.clients.forEach(c => {
-        const data = {
-            type: 1,
-            count: count,
-            temperature: 50,
-            humidity: 50,
-            light: 10
-        }
-        c.send(JSON.stringify(data));
-    })
+    console.log(`Count:${count}`)
 
     conn.onmessage = m => {
         wss1.clients.forEach(c => {
             if (c !== conn && c.readyState === WebSocket.OPEN)
                 c.send(m.data);
+            console.log(m.data);
         })
     }
 
     conn.onclose = () => {
         count--;
-        console.log('close')
+        console.log(`Count:${count}`)
         wss1.clients.forEach(c => {
             const data = {
                 type: 1,
