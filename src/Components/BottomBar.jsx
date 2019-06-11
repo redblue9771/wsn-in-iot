@@ -79,11 +79,11 @@ function BottomBar() {
 		[classes.buttonSuccess]: loading
 	});
 
-	// useEffect(() => {
-	// 	fetch("https://qqluqm.coding.io")
-	// 		.then(res => res.json())
-	// 		.then(res => setUrl(res.url));
-	// }, []);
+	useEffect(() => {
+		fetch("https://qqluqm.coding.io")
+			.then(res => res.json())
+			.then(res => setUrl(res.url));
+	}, []);
 
 	const { enqueueSnackbar } = useSnackbar();
 
