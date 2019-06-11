@@ -66,7 +66,7 @@ export default class LineChart extends React.Component {
 						enabled: true,
 						easing: "linear",
 						dynamicAnimation: {
-							speed: 1000
+							speed: 2000
 						}
 					},
 					toolbar: {
@@ -120,7 +120,7 @@ export default class LineChart extends React.Component {
 					data: data
 				}
 			]);
-		}, 1000);
+		}, 2000);
 
 		if (data.length > 10) resetData();
 	}

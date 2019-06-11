@@ -8,7 +8,6 @@ import HumidityIcon from "../Assets/humidity.png";
 import LightIcon from "../Assets/light.png";
 import TemperatureIcon from "../Assets/temperature.png";
 import BottomBar from "../Components/BottomBar";
-import LineChart from "../Components/Chart";
 import Humidity from "../Components/Humidity";
 import SunIcon from "../Components/Sun";
 import Temperature from "../Components/Temperature";
@@ -78,13 +77,12 @@ function Index() {
 					<SunIcon light={data.light} />
 				</Typography>
 				<Divider />
-				<Typography
+				{/* <Typography
 					variant="h6"
 					align="center"
 					className={classes.Container}>
 					-· 统计监控 ·-
-				</Typography>
-				<LineChart />
+				</Typography> */}
 			</Paper>
 			<SnackbarProvider
 				maxSnack={3}

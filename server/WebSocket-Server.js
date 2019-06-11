@@ -6,13 +6,13 @@ const wss1 = new WebSocket.Server({ noServer: true });
 const wss2 = new WebSocket.Server({ noServer: true });
 let count = 0;
 
-const getRandomArbitrary = (min, max) => {
-    return Math.random() * (max - min) + min;
-}
+// const getRandomArbitrary = (min, max) => {
+//     return Math.random() * (max - min) + min;
+// }
 
-const broadcast = (ws) => {
+const broadcast = (ws, m) => {
     ws.clients.forEach(c => {
-        c.send(getRandomArbitrary(0, 100));
+        c.send(m);
     })
 }
 
@@ -22,11 +22,16 @@ wss1.on('connection', function connection(conn) {
     //     broadcast(wss1);
     // }, 1000);
 
-    console.log(`Count:${count}`)
+    console.log(`c${count}`)
+
+    conn.onopen = () => {
+        const msg = `c${count}`;
+        broadcast(wss1, msg);
+    }
 
     conn.onmessage = m => {
         wss1.clients.forEach(c => {
-            if (c !== conn && c.readyState === WebSocket.OPEN)
+            if (c !== conn && c.readyState === OPEN)
                 c.send(m.data);
             console.log(m.data);
         })
@@ -34,22 +39,22 @@ wss1.on('connection', function connection(conn) {
 
     conn.onclose = () => {
         count--;
-        console.log(`Count:${count}`)
-        wss1.clients.forEach(c => {
-            const data = {
-                type: 1,
-                temperature: 50
-            }
-            if (c !== conn && c.readyState === WebSocket.OPEN)
-                c.send(JSON.stringify(data));
-        })
+        console.log(`count:${count}`)
+        // wss1.clients.forEach(c => {
+        //     const data = {
+        //         type: 1,
+        //         temperature: 50
+        //     }
+        //     if (c !== conn && c.readyState === WebSocket.OPEN)
+        //         c.send(JSON.stringify(data));
+        // })
     }
 });
 
 wss2.on('connection', function connection(conn) {
     conn.onmessage = m => {
         wss2.clients.forEach(c => {
-            if (c !== conn && c.readyState === WebSocket.OPEN)
+            if (c !== conn && c.readyState === OPEN)
                 c.send(m.data);
             console.log(m.data)
         })

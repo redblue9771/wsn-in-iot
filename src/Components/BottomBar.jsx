@@ -79,11 +79,11 @@ function BottomBar() {
 		[classes.buttonSuccess]: loading
 	});
 
-	useEffect(() => {
-		fetch("https://qqluqm.coding.io")
-			.then(res => res.json())
-			.then(res => setUrl(res.url));
-	}, []);
+	// useEffect(() => {
+	// 	fetch("https://qqluqm.coding.io")
+	// 		.then(res => res.json())
+	// 		.then(res => setUrl(res.url));
+	// }, []);
 
 	const { enqueueSnackbar } = useSnackbar();
 
@@ -118,12 +118,34 @@ function BottomBar() {
 				setLoading(false);
 			};
 
-			setData({
-				count: 50,
-				temperature: 50,
-				humidity: 50,
-				light: 50
-			});
+			ws.current[url].onmessage = msg => {
+				const num = Number(msg.data);
+				switch (msg.data[0]) {
+					case "h":
+						setData({
+							...data,
+							humidity: num
+						});
+						break;
+					case "s":
+						setData({
+							...data,
+							temperature: num
+						});
+						break;
+					case "c":
+						setData({
+							...data,
+							count: num
+						});
+						break;
+					default:
+						setData({
+							...data,
+							light: num
+						});
+				}
+			};
 		} else {
 			ws.current[url].close();
 		}

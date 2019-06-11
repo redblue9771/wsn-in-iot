@@ -59,7 +59,7 @@ function TopBar() {
 						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" className={classes.title}>
-						物联网实时监控平台
+						物联网实时监控
 					</Typography>
 					<Button color="inherit" onClick={handleClickOpen("paper")}>
 						ABOUT
