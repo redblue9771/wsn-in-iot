@@ -10,8 +10,6 @@
 
 ![](design.svg)
 
---
-
 ### 技术栈 & 依赖 - Built With
 
 -   Node.js - A JavaScript runtime built on Chrome's V8 JavaScript engine.
@@ -71,7 +69,7 @@ yarn start
 
 -   influxDB 实时数据库
 
--   目前只能使用`http`和'ws'协议，`https`和`wss`需要自行配置 TLS 证书
+-   目前只能使用`http`和`ws`协议，`https`和`wss`需要自行配置 TLS 证书
 
 ## License
 
