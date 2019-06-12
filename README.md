@@ -71,6 +71,8 @@ yarn start
 
 -   influxDB 实时数据库
 
+-   目前只能使用`http`和'ws'协议，`https`和`wss`需要自行配置 TLS 证书
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
