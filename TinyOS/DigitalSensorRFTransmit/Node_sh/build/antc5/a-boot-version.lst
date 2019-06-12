@@ -1,0 +1,46 @@
+C51 COMPILER V9.01   A_BOOT_VERSION                                                        04/18/2018 10:18:20 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE A_BOOT_VERSION
+OBJECT MODULE PLACED IN .\a-boot-version.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.exe a-boot-version.c LARGE OMF2 DEBUG BROWSE PRINT(.\a-boot-version.lst) OBJECT
+                    -(.\a-boot-version.obj) WARNINGLEVEL(0) DEFINE(APRO_ID=0x0001,APRO_VER=0x0001)
+
+line level    source
+
+   1          /* This file include the version of ATOS program */
+   2          
+   3          /* 64 bytes for you */
+   4          
+   5          #pragma userclass (const = version)
+   6          
+   7          
+   8          #ifndef APRO_ID
+              #define APRO_ID 0x0001
+              #endif
+  11          
+  12          #ifndef APRO_VER
+              #define APRO_VER        0x0001
+              #endif
+  15          
+  16          unsigned short code PARAM_APRO_ID = APRO_ID;
+  17          unsigned short code PARAM_APRO_VER = APRO_VER;
+  18          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =      4    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

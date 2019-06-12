@@ -18,7 +18,9 @@ function Sun(props) {
 	return (
 		<div
 			className={classes.Parent}
-			style={{ backgroundColor: `rgba(0,0,0,${props.light * 0.01}` }}>
+			style={{
+				backgroundColor: `rgba(0,0,0,${1 - props.light / 50000}`
+			}}>
 			<svg
 				width="50%"
 				x="0px"

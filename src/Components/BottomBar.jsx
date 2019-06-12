@@ -67,8 +67,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function BottomBar() {
-	const { data, setData } = useContext(socketStatus);
-
+	const { setHumidity, setLight, setTemperature } = useContext(socketStatus);
+	const [count, setCount] = useState(0);
 	const classes = useStyles();
 
 	const [url, setUrl] = useState("ws://localhost:8080/");
@@ -91,7 +91,7 @@ function BottomBar() {
 		if (!loading) {
 			ws.current[url] = new WebSocket(url);
 
-			ws.current[url].onpen = () => {
+			ws.current[url].onopen = () => {
 				enqueueSnackbar("连接成功！", {
 					variant: "success"
 				});
@@ -103,12 +103,10 @@ function BottomBar() {
 					variant: "info"
 				});
 				setLoading(false);
-				setData({
-					count: 0,
-					temperature: 0,
-					humidity: 0,
-					light: 0
-				});
+				setCount(0);
+				setHumidity(0);
+				setLight(0);
+				setTemperature(0);
 			};
 
 			ws.current[url].onerror = () => {
@@ -119,31 +117,18 @@ function BottomBar() {
 			};
 
 			ws.current[url].onmessage = msg => {
-				const num = Number(msg.data);
 				switch (msg.data[0]) {
 					case "h":
-						setData({
-							...data,
-							humidity: num
-						});
+						setTemperature(Number(msg.data.substr(1)));
 						break;
 					case "s":
-						setData({
-							...data,
-							temperature: num
-						});
+						setHumidity(Number(msg.data.substr(1)));
 						break;
 					case "c":
-						setData({
-							...data,
-							count: num
-						});
+						setCount(Number(msg.data.substr(1)));
 						break;
 					default:
-						setData({
-							...data,
-							light: num
-						});
+						setLight(parseInt(msg.data.substr(1), 16));
 				}
 			};
 		} else {
@@ -158,7 +143,7 @@ function BottomBar() {
 					edge="start"
 					color="inherit"
 					aria-label="Open drawer">
-					<Badge badgeContent={data.count} color="secondary">
+					<Badge badgeContent={count} color="secondary">
 						<AccountDetailsIcon />
 					</Badge>
 				</IconButton>

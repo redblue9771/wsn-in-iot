@@ -1,0 +1,12 @@
+$18000800  ___nesc_atomic_end
+$18000880  __nesc_atomic_start
+$0E000880  __vector_0
+$08000800  __vector_13
+$80000000  __vector_14
+$08000800  __vector_15
+$1E0008C0  __vector_16
+$1E000880  __vector_2
+$80000000  __vector_3
+$80000000  __vector_5
+$80000000  __vector_7
+$1E0008C0  __vector_9

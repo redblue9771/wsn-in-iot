@@ -1,25 +1,25 @@
 package main
 
 import (
+	"fmt"
 	"github.com/tarm/serial"
 	"golang.org/x/net/websocket"
 	"log"
 	"strings"
-	"fmt"
 )
 
 func main() {
-	origin := "https://redblue.fun/"
+	origin := "https://localhost:3030/"
 	// res, err := http.Get("https://qqluqm.coding.io/")
 	// checkErr(err)
 
-// var dat map[string]interface{}
-// 	err:=json.Unmarshal([]byte(res),&dat)
+	// var dat map[string]interface{}
+	// 	err:=json.Unmarshal([]byte(res),&dat)
 	// checkErr(err)
 	// 	fmt.Println(dat["url"])
-	url:="wss://qqluqm-8080-amayzx.dev.ide.live/"
+	url := "ws://111.230.150.41:2019/"
 	ws, err := websocket.Dial(url, "", origin)
-	
+
 	checkErr(err)
 
 	defer ws.Close()
@@ -28,12 +28,11 @@ func main() {
 	s, err := serial.OpenPort(c)
 	checkErr(err)
 
-	 defer s.Close()
-
+	defer s.Close()
 
 	buf := make([]byte, 6)
-	str:="";
-	for{
+	str := ""
+	for {
 		str = ""
 		for {
 			n, err := s.Read(buf)
@@ -43,11 +42,12 @@ func main() {
 				break
 			}
 		}
-		str = strings.TrimRight(str,"\r\n")
+		str = strings.TrimRight(str, "\r\n")
 		fmt.Println(str)
 		_, err := ws.Write([]byte(str))
 		checkErr(err)
 	}
+
 }
 
 func checkErr(e error) {
@@ -55,4 +55,3 @@ func checkErr(e error) {
 		log.Fatal(e)
 	}
 }
-

@@ -1,0 +1,903 @@
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE     1
+
+
+MACRO ASSEMBLER AX51 V3.07
+OBJECT MODULE PLACED IN a-boot.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\AX51.exe a-boot.src
+
+LOC    OBJ             LINE     SOURCE
+
+                          1     ; .\a-boot.SRC generated from: a-boot.c
+                          2     ; COMPILER INVOKED BY:
+                          3     ;        C:\Keil\C51\BIN\C51.exe a-boot.c LARGE OMF2 BROWSE DEBUG SRC(.\a-boot.SRC) PRIN
+                               T(.\a-boot.lst) OBJECT(.\a-boot.obj) WARNINGLEVEL(0)
+                          4     
+                          5     $nomod51 
+                          6     
+                          7     NAME    A_BOOT
+                          8     
+ 00C9                     9     WDCTL   DATA    0C9H
+ 00A8.7                  10     EA      BIT     0A8H.7
+ 0085                    11     DPH1    DATA    085H
+ 0084                    12     DPL1    DATA    084H
+ 009F                    13     FMAP    DATA    09FH
+ 00FE                    14     P1_DIR  DATA    0FEH
+ 00C7                    15     MEMCTR  DATA    0C7H
+ 0092                    16     DPS     DATA    092H
+------                   17     ?PR?aBootInit?A_BOOT SEGMENT 'CODE_BOOT' 
+------                   18     ?PR?aBootCopy?A_BOOT SEGMENT 'CODE_BOOT' 
+------                   19     ?PR?aBootReset?A_BOOT                    SEGMENT 'CODE_BOOT' 
+------                   20     ?PR?aBootReprogram?A_BOOT                SEGMENT 'CODE_BOOT' 
+------                   21     ?PR?AnpAbootP__aBootReprogram?A_BOOT     SEGMENT 'CODE_BOOT' 
+                         22             PUBLIC  AnpAbootP__aBootReprogram
+                         23             PUBLIC  aBootReprogram
+                         24             PUBLIC  aBootReset
+                         25             PUBLIC  aBootCopy
+                         26             PUBLIC  aBootInit
+                         27     ; #pragma userclass (code = boot)
+                         28     ; 
+                         29     ; 
+                         30     ; 
+                         31     ; 
+                         32     ; typedef signed char int8_t;
+                         33     ; typedef short int16_t;
+                         34     ; typedef long int32_t;
+                         35     ; typedef unsigned char uint8_t;
+                         36     ; typedef unsigned short uint16_t;
+                         37     ; typedef unsigned long uint32_t;
+                         38     ; 
+                         39     ; sbit EA = 0xAF;
+                         40     ; sfr MEMCTR = 0xC7;
+                         41     ; sfr FMAP = 0x9F;
+                         42     ; //sfr FADDRH = 0xAD;
+                         43     ; //sfr FADDRL = 0xAC;
+                         44     ; //sfr FCTL = 0xAE;
+                         45     ; //sfr FWT = 0xAB;
+                         46     ; sfr WDCTL = 0xC9;
+                         47     ; sfr P1_DIR = 0xFE;
+                         48     ; sfr DPH1 = 0x85;
+                         49     ; sfr DPL1 = 0x84;
+                         50     ; sfr DPS = 0x92;
+                         51     ; 
+                         52     ; 
+                         53     ; 
+                         54     ; /*
+                         55     ; #define CC2430_MEMCTR_FMAP_MASK               0xCF
+                         56     ; #define CC2430_MEMCTR_FMAP_OFFSET     4
+                         57     ; #define CC2430_CODE_MAP_TO(n)         { MEMCTR = (MEMCTR&CC2430_MEMCTR_FMAP_MASK) | (n
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE     2
+
+                               << CC2430_MEMCTR_FMAP_OFFSET); }
+                         58     ; #define CC2430_CODE_MAP_SAVE(v)        { (v) = MEMCTR; }
+                         59     ; #define CC2430_CODE_MAP_LOAD(v)        { MEMCTR = (v); }
+                         60     ; */
+                         61     ; 
+                         62     ; #pragma asm
+                         63       
+                         64       
+                         65       
+                         66       
+------                   67       ABOOT_XDATA SEGMENT 'CODE_BOOT'
+------                   68              RSEG   ABOOT_XDATA 
+000000                   69       eraseFunctionBufferStart:
+000000 75                70             DB      075H
+000001 AE                71             DB      0AEH
+000002 01                72             DB      001H
+000003 00                73             DB      000H
+000004 E5                74             DB      0E5H
+000005 AE                75             DB      0AEH
+000006 54                76             DB      054H
+000007 80                77             DB      080H
+000008 70                78             DB      070H
+000009 FA                79             DB      0FAH
+00000A 22                80             DB      022H
+00000B                   81       eraseFunctionBufferEnd:
+                         82       
+                         83       
+00000B                   84       writeFunctionBufferStart:
+00000B 7B                85             DB 07BH
+00000C 01                86             DB 001H
+00000D 10                87             DB 010H
+00000E AF                88             DB 0AFH
+00000F 02                89             DB 002H
+000010 7B                90             DB 07BH
+000011 00                91             DB 000H
+000012 C0                92             DB 0C0H
+000013 83                93             DB 083H
+000014 C0                94             DB 0C0H
+000015 82                95             DB 082H
+000016 C0                96             DB 0C0H
+000017 85                97             DB 085H
+000018 C0                98             DB 0C0H
+000019 84                99             DB 084H
+00001A C0               100             DB 0C0H
+00001B 92               101             DB 092H
+00001C EA               102             DB 0EAH
+00001D F5               103             DB 0F5H
+00001E 83               104             DB 083H
+00001F E9               105             DB 0E9H
+000020 F5               106             DB 0F5H
+000021 82               107             DB 082H
+000022 75               108             DB 075H
+000023 92               109             DB 092H
+000024 01               110             DB 001H
+000025 75               111             DB 075H
+000026 85               112             DB 085H
+000027 62               113             DB 062H
+000028 75               114             DB 075H
+000029 84               115             DB 084H
+00002A 70               116             DB 070H
+00002B E0               117             DB 0E0H
+00002C 54               118             DB 054H
+00002D 80               119             DB 080H
+00002E 70               120             DB 070H
+00002F FB               121             DB 0FBH
+000030 74               122             DB 074H
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE     3
+
+000031 02               123             DB 002H
+000032 F0               124             DB 0F0H
+000033 EC               125             DB 0ECH
+000034 60               126             DB 060H
+000035 27               127             DB 027H
+000036 7A               128             DB 07AH
+000037 40               129             DB 040H
+000038 79               130             DB 079H
+000039 04               131             DB 004H
+00003A 75               132             DB 075H
+00003B 92               133             DB 092H
+00003C 00               134             DB 000H
+00003D E0               135             DB 0E0H
+00003E A3               136             DB 0A3H
+00003F 75               137             DB 075H
+000040 92               138             DB 092H
+000041 01               139             DB 001H
+000042 75               140             DB 075H
+000043 85               141             DB 085H
+000044 62               142             DB 062H
+000045 75               143             DB 075H
+000046 84               144             DB 084H
+000047 73               145             DB 073H
+000048 F0               146             DB 0F0H
+000049 D9               147             DB 0D9H
+00004A EF               148             DB 0EFH
+00004B 74               149             DB 074H
+00004C 00               150             DB 000H
+00004D F0               151             DB 0F0H
+00004E 75               152             DB 075H
+00004F 85               153             DB 085H
+000050 62               154             DB 062H
+000051 75               155             DB 075H
+000052 84               156             DB 084H
+000053 70               157             DB 070H
+000054 E0               158             DB 0E0H
+000055 54               159             DB 054H
+000056 40               160             DB 040H
+000057 70               161             DB 070H
+000058 FB               162             DB 0FBH
+000059 DA               163             DB 0DAH
+00005A DD               164             DB 0DDH
+00005B DC               165             DB 0DCH
+00005C D9               166             DB 0D9H
+00005D ED               167             DB 0EDH
+00005E 60               168             DB 060H
+00005F 29               169             DB 029H
+000060 ED               170             DB 0EDH
+000061 54               171             DB 054H
+000062 FC               172             DB 0FCH
+000063 03               173             DB 003H
+000064 03               174             DB 003H
+000065 FD               175             DB 0FDH
+000066 79               176             DB 079H
+000067 04               177             DB 004H
+000068 75               178             DB 075H
+000069 92               179             DB 092H
+00006A 00               180             DB 000H
+00006B E0               181             DB 0E0H
+00006C A3               182             DB 0A3H
+00006D 75               183             DB 075H
+00006E 92               184             DB 092H
+00006F 01               185             DB 001H
+000070 75               186             DB 075H
+000071 85               187             DB 085H
+000072 62               188             DB 062H
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE     4
+
+000073 75               189             DB 075H
+000074 84               190             DB 084H
+000075 73               191             DB 073H
+000076 F0               192             DB 0F0H
+000077 D9               193             DB 0D9H
+000078 EF               194             DB 0EFH
+000079 74               195             DB 074H
+00007A 00               196             DB 000H
+00007B F0               197             DB 0F0H
+00007C 75               198             DB 075H
+00007D 85               199             DB 085H
+00007E 62               200             DB 062H
+00007F 75               201             DB 075H
+000080 84               202             DB 084H
+000081 70               203             DB 070H
+000082 E0               204             DB 0E0H
+000083 54               205             DB 054H
+000084 40               206             DB 040H
+000085 70               207             DB 070H
+000086 FB               208             DB 0FBH
+000087 DD               209             DB 0DDH
+000088 DD               210             DB 0DDH
+000089 D0               211             DB 0D0H
+00008A 92               212             DB 092H
+00008B D0               213             DB 0D0H
+00008C 84               214             DB 084H
+00008D D0               215             DB 0D0H
+00008E 85               216             DB 085H
+00008F D0               217             DB 0D0H
+000090 82               218             DB 082H
+000091 D0               219             DB 0D0H
+000092 83               220             DB 083H
+000093 EB               221             DB 0EBH
+000094 60               222             DB 060H
+000095 02               223             DB 002H
+000096 D2               224             DB 0D2H
+000097 AF               225             DB 0AFH
+000098 22               226             DB 022H
+000099                  227       writeFunctionBufferEnd:
+                        228       
+------                  229       ABOOT_RAM SEGMENT XDATA
+------                  230             RSEG    ABOOT_RAM
+                        231       
+ 0800                   232       eraseFunctionBuffer EQU 00800H
+ 08F0                   233       writeFunctionBuffer EQU 008F0H
+                        234       
+                        235       
+ 1000                   236       write_cache EQU       01000H
+                        237       
+ 6271                   238       FADDRL        EQU             06271H
+ 6272                   239       FADDRH        EQU             06272H
+ 6270                   240       FCTL  EQU             06270H
+                        241       
+                        242       
+                        243     ; #pragma endasm
+                        244     ; 
+                        245     ; 
+                        246     ; //uint8_t write_cache[0x0800];
+                        247     ; 
+                        248     ; void aBootInit()
+                        249     
+------                  250             RSEG  ?PR?aBootInit?A_BOOT
+000000                  251     aBootInit:
+                        252             USING   0
+                        253                             ; SOURCE LINE # 222
+                        254     ; {
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE     5
+
+                        255                             ; SOURCE LINE # 223
+                        256     ; #pragma asm
+                        257     ; 
+                        258               
+                        259     ;       ;Feed watchdog
+                        260               ;Feed watchdog
+                        261     ;       MOV             WDCTL, #0A8H
+000000 75C9A8           262               MOV           WDCTL, #0A8H
+                        263     ;       MOV             WDCTL, #058H
+000003 75C958           264               MOV           WDCTL, #058H
+                        265     ; 
+                        266               
+                        267     ;       MOV     R4,#HIGH (eraseFunctionBuffer)
+000006 7C08             268               MOV   R4,#HIGH (eraseFunctionBuffer)
+                        269     ;       MOV     R3,#LOW (eraseFunctionBuffer)   
+000008 7B00             270               MOV   R3,#LOW (eraseFunctionBuffer)   
+                        271     ; 
+                        272               
+                        273     ;       MOV     R2,#HIGH (eraseFunctionBufferStart)
+00000A 7A00       F     274               MOV   R2,#HIGH (eraseFunctionBufferStart)
+                        275     ;       MOV     R1,#LOW (eraseFunctionBufferStart)
+00000C 7900       F     276               MOV   R1,#LOW (eraseFunctionBufferStart)
+                        277     ; 
+                        278               
+                        279     ;       MOV             R5,#eraseFunctionBufferEnd-eraseFunctionBufferStart
+00000E 7D0B             280               MOV           R5,#eraseFunctionBufferEnd-eraseFunctionBufferStart
+                        281     ; 
+                        282               
+                        283     ; erase_copy_loop:
+000010                  284               erase_copy_loop:
+                        285     ;       MOV             DPS, #0
+000010 759200           286               MOV           DPS, #0
+                        287     ;       MOV     DPH, R2
+000013 8A83             288               MOV     DPH, R2
+                        289     ;       MOV     DPL, R1
+000015 8982             290               MOV     DPL, R1
+                        291     ;       CLR             A
+000017 E4               292               CLR           A
+                        293     ;       MOVC    A,@A+DPTR
+000018 93               294               MOVC  A,@A+DPTR
+                        295     ;       INC     DPTR
+000019 A3               296               INC   DPTR
+                        297     ;       MOV     R2,DPH
+00001A AA83             298               MOV     R2,DPH
+                        299     ;       MOV     R1,DPL
+00001C A982             300               MOV     R1,DPL
+                        301     ; 
+                        302               
+                        303     ;       MOV     DPH,R4
+00001E 8C83             304               MOV     DPH,R4
+                        305     ;       MOV     DPL,R3
+000020 8B82             306               MOV     DPL,R3
+                        307     ;       MOVX    @DPTR,A
+000022 F0               308               MOVX  @DPTR,A
+                        309     ;       INC     DPTR
+000023 A3               310               INC   DPTR
+                        311     ;       MOV     R4,DPH
+000024 AC83             312               MOV     R4,DPH
+                        313     ;       MOV     R3,DPL
+000026 AB82             314               MOV     R3,DPL
+                        315     ; 
+                        316               
+                        317     ;       DEC             R5
+000028 1D               318               DEC           R5
+                        319     ;       MOV             A,R5
+000029 ED               320               MOV           A,R5
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE     6
+
+                        321     ;       JNZ             erase_copy_loop
+00002A 70E4             322               JNZ           erase_copy_loop
+                        323     ; 
+                        324               
+                        325     ;       MOV     R4,#HIGH (writeFunctionBuffer)
+00002C 7C08             326               MOV   R4,#HIGH (writeFunctionBuffer)
+                        327     ;       MOV     R3,#LOW (writeFunctionBuffer)   
+00002E 7BF0             328               MOV   R3,#LOW (writeFunctionBuffer)   
+                        329     ; 
+                        330               
+                        331     ;       MOV     R2,#HIGH (writeFunctionBufferStart)
+000030 7A00       F     332               MOV   R2,#HIGH (writeFunctionBufferStart)
+                        333     ;       MOV     R1,#LOW (writeFunctionBufferStart)
+000032 7900       F     334               MOV   R1,#LOW (writeFunctionBufferStart)
+                        335     ; 
+                        336               
+                        337     ;       MOV             R5,#writeFunctionBufferEnd-writeFunctionBufferStart
+000034 7D8E             338               MOV           R5,#writeFunctionBufferEnd-writeFunctionBufferStart
+                        339     ; 
+                        340               
+                        341     ; write_copy_loop:
+000036                  342               write_copy_loop:
+                        343     ;       MOV             DPS, #0
+000036 759200           344               MOV           DPS, #0
+                        345     ;       MOV     DPH,R2
+000039 8A83             346               MOV     DPH,R2
+                        347     ;       MOV     DPL,R1
+00003B 8982             348               MOV     DPL,R1
+                        349     ;       CLR             A
+00003D E4               350               CLR           A
+                        351     ;       MOVC    A,@A+DPTR
+00003E 93               352               MOVC  A,@A+DPTR
+                        353     ;       INC     DPTR
+00003F A3               354               INC   DPTR
+                        355     ;       MOV     R2,DPH
+000040 AA83             356               MOV     R2,DPH
+                        357     ;       MOV     R1,DPL
+000042 A982             358               MOV     R1,DPL
+                        359     ; 
+                        360               
+                        361     ;       MOV     DPH,R4
+000044 8C83             362               MOV     DPH,R4
+                        363     ;       MOV     DPL,R3
+000046 8B82             364               MOV     DPL,R3
+                        365     ;       MOVX    @DPTR,A
+000048 F0               366               MOVX  @DPTR,A
+                        367     ;       INC     DPTR
+000049 A3               368               INC   DPTR
+                        369     ;       MOV     R4,DPH
+00004A AC83             370               MOV     R4,DPH
+                        371     ;       MOV     R3,DPL
+00004C AB82             372               MOV     R3,DPL
+                        373     ; 
+                        374               
+                        375     ;       DEC             R5
+00004E 1D               376               DEC           R5
+                        377     ;       MOV             A,R5
+00004F ED               378               MOV           A,R5
+                        379     ;       JNZ             write_copy_loop
+000050 70E4             380               JNZ           write_copy_loop
+                        381     ; #pragma endasm
+                        382     ; }
+                        383                             ; SOURCE LINE # 288
+000052 22               384             RET     
+                        385     ; END OF aBootInit
+                        386     
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE     7
+
+                        387     ; 
+                        388     ; void aBootCopy()
+                        389     
+------                  390             RSEG  ?PR?aBootCopy?A_BOOT
+000000                  391     aBootCopy:
+                        392             USING   0
+                        393                             ; SOURCE LINE # 290
+                        394     ; {
+                        395                             ; SOURCE LINE # 291
+                        396     ; #pragma asm
+                        397     ;       MOV             R3, #000H   ;Dst page number
+000000 7B00             398               MOV           R3, #000H   ;Dst page number
+                        399     ;       MOV             R0, #020H       ;Src page number 
+000002 7820             400               MOV           R0, #020H       ;Src page number 
+                        401     ; 
+                        402               
+                        403     ; aBootCopy_page:
+000004                  404               aBootCopy_page:
+                        405     ;       ;Feed watchdog
+                        406               ;Feed watchdog
+                        407     ;       MOV                     WDCTL, #0A8H
+000004 75C9A8           408               MOV                   WDCTL, #0A8H
+                        409     ;       MOV                     WDCTL, #058H
+000007 75C958           410               MOV                   WDCTL, #058H
+                        411     ; 
+                        412               
+                        413     ;       ;###### Read page to cache
+                        414               ;###### Read page to cache
+                        415     ; 
+                        416               
+                        417     ;       ;Setup MEMCTR
+                        418               ;Setup MEMCTR
+                        419     ;       MOV             A, R0
+00000A E8               420               MOV           A, R0
+                        421     ;       RR              A
+00000B 03               422               RR            A
+                        423     ;       RR              A
+00000C 03               424               RR            A
+                        425     ;       RR              A
+00000D 03               426               RR            A
+                        427     ;       RR              A
+00000E 03               428               RR            A
+                        429     ;       ANL             A, #007H
+00000F 5407             430               ANL           A, #007H
+                        431     ;       MOV             MEMCTR, A
+000011 F5C7             432               MOV           MEMCTR, A
+                        433     ;       MOV             FMAP, A         ;Setup flash map???
+000013 F59F             434               MOV           FMAP, A         ;Setup flash map???
+                        435     ; 
+                        436               
+                        437     ;       ;Setup source
+                        438               ;Setup source
+                        439     ;       MOV             A, R0
+000015 E8               440               MOV           A, R0
+                        441     ;       ANL             A, #00FH
+000016 540F             442               ANL           A, #00FH
+                        443     ;       RL              A
+000018 23               444               RL            A
+                        445     ;       RL              A
+000019 23               446               RL            A
+                        447     ;       RL              A
+00001A 23               448               RL            A
+                        449     ;       ORL     A,#080H
+00001B 4480             450               ORL   A,#080H
+                        451     ;       MOV             DPH1, A
+00001D F585             452               MOV           DPH1, A
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE     8
+
+                        453     ;       MOV             DPL1, #000H
+00001F 758400           454               MOV           DPL1, #000H
+                        455     ;               
+                        456               
+                        457     ;       ;Setup destination
+                        458               ;Setup destination
+                        459     ;       MOV             DPH, #HIGH(write_cache)
+000022 758310           460               MOV           DPH, #HIGH(write_cache)
+                        461     ;       MOV             DPL, #LOW(write_cache)
+000025 758200           462               MOV           DPL, #LOW(write_cache)
+                        463     ; 
+                        464               
+                        465     ;       MOV             R1, #010H
+000028 7910             466               MOV           R1, #010H
+                        467     ; aBootCopy_page_read_big:
+00002A                  468               aBootCopy_page_read_big:
+                        469     ; 
+                        470               
+                        471     ;       ;Setup page copy information
+                        472               ;Setup page copy information
+                        473     ;       MOV             R2, #080H
+00002A 7A80             474               MOV           R2, #080H
+                        475     ; aBootCopy_page_read_small:
+00002C                  476               aBootCopy_page_read_small:
+                        477     ;       MOV             DPS, #1
+00002C 759201           478               MOV           DPS, #1
+                        479     ;       CLR             A
+00002F E4               480               CLR           A
+                        481     ;       MOVC    A, @A+DPTR
+000030 93               482               MOVC  A, @A+DPTR
+                        483     ;       INC             DPTR
+000031 A3               484               INC           DPTR
+                        485     ; 
+                        486               
+                        487     ;       MOV             DPS, #0
+000032 759200           488               MOV           DPS, #0
+                        489     ;       MOVX    @DPTR, A
+000035 F0               490               MOVX  @DPTR, A
+                        491     ;       INC             DPTR
+000036 A3               492               INC           DPTR
+                        493     ;       DJNZ    R2, aBootCopy_page_read_small
+000037 DAF3             494               DJNZ  R2, aBootCopy_page_read_small
+                        495     ;       DJNZ    R1, aBootCopy_page_read_big
+000039 D9EF             496               DJNZ  R1, aBootCopy_page_read_big
+                        497     ; 
+                        498               
+                        499     ;       ;###### Erase page
+                        500               ;###### Erase page
+                        501     ; #if 1
+                        502               
+                        503     ;       ;Set erase page
+                        504               ;Set erase page
+                        505     ;     MOV               DPS, #1
+00003B 759201           506               MOV           DPS, #1
+                        507     ;       MOV             DPH1, #HIGH(FADDRH)
+00003E 758562           508               MOV           DPH1, #HIGH(FADDRH)
+                        509     ;       MOV             DPL1, #LOW(FADDRH)
+000041 758472           510               MOV           DPL1, #LOW(FADDRH)
+                        511     ;       MOV             A, R3
+000044 EB               512               MOV           A, R3
+                        513     ;       RL              A
+000045 23               514               RL            A
+                        515     ;       MOVX    @DPTR, A
+000046 F0               516               MOVX  @DPTR, A
+                        517     ; 
+                        518               
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE     9
+
+                        519     ; 
+                        520               
+                        521     ;       ;try to wait erase loop
+                        522               ;try to wait erase loop
+                        523     ;     MOV     DPH1, #HIGH(FCTL)
+000047 758562           524               MOV     DPH1, #HIGH(FCTL)
+                        525     ;     MOV     DPL1, #LOW(FCTL)
+00004A 758470           526               MOV     DPL1, #LOW(FCTL)
+                        527     ; 
+                        528               
+                        529     ; waitEraseLoop0:  
+00004D                  530               waitEraseLoop0:  
+                        531     ;       MOVX            A, @DPTR
+00004D E0               532               MOVX          A, @DPTR
+                        533     ;     ANL                       A, #80H
+00004E 5480             534               ANL                   A, #80H
+                        535     ;     JNZ                       waitEraseLoop0
+000050 70FB             536               JNZ                   waitEraseLoop0
+                        537     ; 
+                        538               
+                        539     ;     MOV                       A, #01H
+000052 7401             540               MOV                   A, #01H
+                        541     ;     MOVX              @DPTR, A
+000054 F0               542               MOVX          @DPTR, A
+                        543     ;     NOP
+000055 00               544               NOP
+                        545     ; 
+                        546               
+                        547     ; waitEraseLoop1:  
+000056                  548               waitEraseLoop1:  
+                        549     ;       MOVX            A, @DPTR
+000056 E0               550               MOVX          A, @DPTR
+                        551     ;     ANL                       A, #80H
+000057 5480             552               ANL                   A, #80H
+                        553     ;     JNZ                       waitEraseLoop1
+000059 70FB             554               JNZ                   waitEraseLoop1
+                        555     ; 
+                        556               
+                        557     ; #else
+                        558               
+                        559     ;       MOV             A, MEMCTR
+                        560               
+                        561     ;       ORL             A, #008H
+                        562               
+                        563     ;       MOV             MEMCTR, A
+                        564               
+                        565     ; 
+                        566               
+                        567     ;       PUSH    AR0
+                        568               
+                        569     ;       PUSH    AR3
+                        570               
+                        571     ;       LCALL   aBootCopy_call_erase
+                        572               
+                        573     ;       POP             AR3
+                        574               
+                        575     ;       POP             AR0
+                        576               
+                        577     ;       
+                        578               
+                        579     ;       MOV             A, MEMCTR
+                        580               
+                        581     ;       ANL             A, #0F7H
+                        582               
+                        583     ;       MOV             MEMCTR, A
+                        584               
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE    10
+
+                        585     ; #endif
+                        586               
+                        587     ; 
+                        588               
+                        589     ; 
+                        590               
+                        591     ;       ;###### Write Page
+                        592               ;###### Write Page
+                        593     ; 
+                        594               
+                        595     ;       ;Set page -> FADDRH
+                        596               ;Set page -> FADDRH
+                        597     ;     MOV               DPS, #1
+00005B 759201           598               MOV           DPS, #1
+                        599     ;       MOV             DPH1, #HIGH(FADDRH)
+00005E 758562           600               MOV           DPH1, #HIGH(FADDRH)
+                        601     ;       MOV             DPL1, #LOW(FADDRH)
+000061 758472           602               MOV           DPL1, #LOW(FADDRH)
+                        603     ;       MOV             A, R3
+000064 EB               604               MOV           A, R3
+                        605     ;       RL              A
+000065 23               606               RL            A
+                        607     ;       MOVX    @DPTR, A
+000066 F0               608               MOVX  @DPTR, A
+                        609     ; 
+                        610               
+                        611     ;       ;Set offset -> FADDRL
+                        612               ;Set offset -> FADDRL
+                        613     ;       MOV             DPH1, #HIGH(FADDRL)
+000067 758562           614               MOV           DPH1, #HIGH(FADDRL)
+                        615     ;       MOV             DPL1, #LOW(FADDRL)
+00006A 758471           616               MOV           DPL1, #LOW(FADDRL)
+                        617     ;       CLR             A
+00006D E4               618               CLR           A
+                        619     ;       MOVX    @DPTR, A
+00006E F0               620               MOVX  @DPTR, A
+                        621     ;       
+                        622               
+                        623     ;       ; R1 (LSB) and R2 (MSB) contains the start address of the buffer from which the 
+                               program can be run in RAM
+                        624               ; R1 (LSB) and R2 (MSB) contains the start address of the buffer from which th
+                               e program can be run in RAM
+                        625     ;       MOV             R2, #HIGH(write_cache)
+00006F 7A10             626               MOV           R2, #HIGH(write_cache)
+                        627     ;       MOV             R1, #LOW(write_cache)
+000071 7900             628               MOV           R1, #LOW(write_cache)
+                        629     ;       
+                        630               
+                        631     ;       MOV             R4, #008H
+000073 7C08             632               MOV           R4, #008H
+                        633     ;       MOV             R5, #000H
+000075 7D00             634               MOV           R5, #000H
+                        635     ;       
+                        636               
+                        637     ;       ;Setup MEMCTR
+                        638               ;Setup MEMCTR
+                        639     ;       MOV             A, MEMCTR
+000077 E5C7             640               MOV           A, MEMCTR
+                        641     ;       ORL             A, #008H
+000079 4408             642               ORL           A, #008H
+                        643     ;       MOV             MEMCTR, A
+00007B F5C7             644               MOV           MEMCTR, A
+                        645     ;       
+                        646               
+                        647     ;       
+                        648               
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE    11
+
+                        649     ;       PUSH    AR0
+00007D C000             650               PUSH  AR0
+                        651     ;       PUSH    AR3
+00007F C003             652               PUSH  AR3
+                        653     ;       LCALL   aBootCopy_call
+000081 120000     F     654               LCALL         aBootCopy_call
+                        655     ;       POP             AR3
+000084 D003             656               POP           AR3
+                        657     ;       POP             AR0
+000086 D000             658               POP           AR0
+                        659     ; 
+                        660               
+                        661     ;       MOV             A, MEMCTR
+000088 E5C7             662               MOV           A, MEMCTR
+                        663     ;       ANL             A, #0F7H
+00008A 54F7             664               ANL           A, #0F7H
+                        665     ;       MOV             MEMCTR, A
+00008C F5C7             666               MOV           MEMCTR, A
+                        667     ;       
+                        668               
+                        669     ; aBootCopy_page_end:
+00008E                  670               aBootCopy_page_end:
+                        671     ;       MOV             A,R3
+00008E EB               672               MOV           A,R3
+                        673     ;       JNZ             aBootCopy_page_end_1
+00008F 7002             674               JNZ           aBootCopy_page_end_1
+                        675     ;       INC     R0
+000091 08               676               INC   R0
+                        677     ;       INC     R3      
+000092 0B               678               INC   R3      
+                        679     ; aBootCopy_page_end_1:
+000093                  680               aBootCopy_page_end_1:
+                        681     ;       INC     R0
+000093 08               682               INC   R0
+                        683     ;       INC     R3
+000094 0B               684               INC   R3
+                        685     ; 
+                        686               
+                        687     ;       MOV             A,R3
+000095 EB               688               MOV           A,R3
+                        689     ;       SUBB    A,#01FH
+000096 941F             690               SUBB  A,#01FH
+                        691     ;       JZ              aBootCopy_end
+000098 6019             692               JZ            aBootCopy_end
+                        693     ;       JMP             aBootCopy_page
+00009A 020000     F     694               JMP           aBootCopy_page
+                        695     ;       
+                        696               
+                        697     ; aBootCopy_call:
+00009D                  698               aBootCopy_call:
+                        699     ;       MOV             DPS, #0
+00009D 759200           700               MOV           DPS, #0
+                        701     ;       MOV     DPH, #HIGH(writeFunctionBuffer)
+0000A0 758308           702               MOV     DPH, #HIGH(writeFunctionBuffer)
+                        703     ;       ORL             DPH, #080H              ;Map SRAM address to CODE
+0000A3 438380           704               ORL           DPH, #080H              ;Map SRAM address to CODE
+                        705     ;       MOV     DPL, #LOW(writeFunctionBuffer)
+0000A6 7582F0           706               MOV     DPL, #LOW(writeFunctionBuffer)
+                        707     ;       CLR     A
+0000A9 E4               708               CLR     A
+                        709     ;       JMP     @A+DPTR
+0000AA 73               710               JMP     @A+DPTR
+                        711     ; 
+                        712               
+                        713     ; aBootCopy_call_erase:
+0000AB                  714               aBootCopy_call_erase:
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE    12
+
+                        715     ;       MOV     DPH,#HIGH(eraseFunctionBuffer)
+0000AB 758308           716               MOV     DPH,#HIGH(eraseFunctionBuffer)
+                        717     ;       MOV     DPL,#LOW(eraseFunctionBuffer)
+0000AE 758200           718               MOV     DPL,#LOW(eraseFunctionBuffer)
+                        719     ;       CLR     A
+0000B1 E4               720               CLR     A
+                        721     ;       JMP     @A+DPTR
+0000B2 73               722               JMP     @A+DPTR
+                        723     ; 
+                        724               
+                        725     ; aBootCopy_end:
+0000B3                  726               aBootCopy_end:
+                        727     ;       NOP
+0000B3 00               728               NOP
+                        729     ; 
+                        730               
+                        731     ; #pragma endasm
+                        732     ; }
+                        733                             ; SOURCE LINE # 461
+0000B4 22               734             RET     
+                        735     ; END OF aBootCopy
+                        736     
+                        737     ; 
+                        738     ; void aBootReset()
+                        739     
+------                  740             RSEG  ?PR?aBootReset?A_BOOT
+000000                  741     aBootReset:
+                        742             USING   0
+                        743                             ; SOURCE LINE # 463
+                        744     ; {
+                        745                             ; SOURCE LINE # 464
+                        746     ;       WDCTL = 0x00;
+                        747                             ; SOURCE LINE # 465
+000000 E4               748             CLR     A
+000001 F5C9             749             MOV     WDCTL,A
+                        750     ;       WDCTL = 0x0B;
+                        751                             ; SOURCE LINE # 466
+000003 75C90B           752             MOV     WDCTL,#0BH
+000006                  753     ?C0003:
+                        754     ;       while(1);
+                        755                             ; SOURCE LINE # 467
+000006 80FE             756             SJMP    ?C0003
+                        757     ; END OF aBootReset
+                        758     
+                        759     ; }
+                        760     ; 
+                        761     ; void aBootReprogram()
+                        762     
+------                  763             RSEG  ?PR?aBootReprogram?A_BOOT
+000000                  764     aBootReprogram:
+                        765             USING   0
+                        766                             ; SOURCE LINE # 470
+                        767     ; {
+                        768                             ; SOURCE LINE # 471
+                        769     ;       EA = 0;
+                        770                             ; SOURCE LINE # 472
+000000 C2AF             771             CLR     EA
+                        772     ; 
+                        773     ;       /* Set max watchdog timeout */
+                        774     ;       WDCTL = 0x08;
+                        775                             ; SOURCE LINE # 475
+000002 75C908           776             MOV     WDCTL,#08H
+                        777     ;       
+                        778     ;       aBootInit();
+                        779                             ; SOURCE LINE # 477
+000005 120000     F     780             LCALL   aBootInit
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE    13
+
+                        781     ;       aBootCopy();
+                        782                             ; SOURCE LINE # 478
+000008 120000     F     783             LCALL   aBootCopy
+                        784     ;       aBootReset();
+                        785                             ; SOURCE LINE # 479
+00000B 020000     F     786             LJMP    aBootReset
+                        787     ; END OF aBootReprogram
+                        788     
+                        789     ; }
+                        790     ; 
+                        791     ; void AnpAbootP__aBootReprogram()
+                        792     
+------                  793             RSEG  ?PR?AnpAbootP__aBootReprogram?A_BOOT
+000000                  794     AnpAbootP__aBootReprogram:
+                        795             USING   0
+                        796                             ; SOURCE LINE # 482
+                        797     ; {
+                        798                             ; SOURCE LINE # 483
+                        799     ;       aBootReprogram();
+                        800                             ; SOURCE LINE # 484
+000000 020000     F     801             LJMP    aBootReprogram
+                        802     ; END OF AnpAbootP__aBootReprogram
+                        803     
+                        804             END
+AX51 MACRO ASSEMBLER  A-BOOT                                                                05/23/18 09:30:35 PAGE    14
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                               T Y P E  V A L U E     ATTRIBUTES
+
+?C0003 . . . . . . . . . . . . . . .  C  ADDR  0006H     R   SEG=?PR?ABOOTRESET?A_BOOT
+?PR?ABOOTCOPY?A_BOOT . . . . . . . .  C  SEG   0000B5H       REL=UNIT, ALN=BYTE
+?PR?ABOOTINIT?A_BOOT . . . . . . . .  C  SEG   000053H       REL=UNIT, ALN=BYTE
+?PR?ABOOTREPROGRAM?A_BOOT. . . . . .  C  SEG   00000EH       REL=UNIT, ALN=BYTE
+?PR?ABOOTRESET?A_BOOT. . . . . . . .  C  SEG   000008H       REL=UNIT, ALN=BYTE
+?PR?ANPABOOTP__ABOOTREPROGRAM?A_BOOT  C  SEG   000003H       REL=UNIT, ALN=BYTE
+A_BOOT . . . . . . . . . . . . . . .  -- ----  -------       
+ABOOT_RAM. . . . . . . . . . . . . .  X  SEG   000000H       REL=UNIT, ALN=BYTE
+ABOOT_XDATA. . . . . . . . . . . . .  C  SEG   000099H       REL=UNIT, ALN=BYTE
+ABOOTCOPY. . . . . . . . . . . . . .  C  ADDR  0000H     R   SEG=?PR?ABOOTCOPY?A_BOOT
+ABOOTCOPY_CALL . . . . . . . . . . .  C  ADDR  009DH     R   SEG=?PR?ABOOTCOPY?A_BOOT
+ABOOTCOPY_CALL_ERASE . . . . . . . .  C  ADDR  00ABH     R   SEG=?PR?ABOOTCOPY?A_BOOT
+ABOOTCOPY_END. . . . . . . . . . . .  C  ADDR  00B3H     R   SEG=?PR?ABOOTCOPY?A_BOOT
+ABOOTCOPY_PAGE . . . . . . . . . . .  C  ADDR  0004H     R   SEG=?PR?ABOOTCOPY?A_BOOT
+ABOOTCOPY_PAGE_END . . . . . . . . .  C  ADDR  008EH     R   SEG=?PR?ABOOTCOPY?A_BOOT
+ABOOTCOPY_PAGE_END_1 . . . . . . . .  C  ADDR  0093H     R   SEG=?PR?ABOOTCOPY?A_BOOT
+ABOOTCOPY_PAGE_READ_BIG. . . . . . .  C  ADDR  002AH     R   SEG=?PR?ABOOTCOPY?A_BOOT
+ABOOTCOPY_PAGE_READ_SMALL. . . . . .  C  ADDR  002CH     R   SEG=?PR?ABOOTCOPY?A_BOOT
+ABOOTINIT. . . . . . . . . . . . . .  C  ADDR  0000H     R   SEG=?PR?ABOOTINIT?A_BOOT
+ABOOTREPROGRAM . . . . . . . . . . .  C  ADDR  0000H     R   SEG=?PR?ABOOTREPROGRAM?A_BOOT
+ABOOTRESET . . . . . . . . . . . . .  C  ADDR  0000H     R   SEG=?PR?ABOOTRESET?A_BOOT
+ANPABOOTP__ABOOTREPROGRAM. . . . . .  C  ADDR  0000H     R   SEG=?PR?ANPABOOTP__ABOOTREPROGRAM?A_BOOT
+AR0. . . . . . . . . . . . . . . . .  D  ADDR  0000H     A   
+AR3. . . . . . . . . . . . . . . . .  D  ADDR  0003H     A   
+DPH. . . . . . . . . . . . . . . . .  D  ADDR  0083H     A   
+DPH1 . . . . . . . . . . . . . . . .  D  ADDR  0085H     A   
+DPL. . . . . . . . . . . . . . . . .  D  ADDR  0082H     A   
+DPL1 . . . . . . . . . . . . . . . .  D  ADDR  0084H     A   
+DPS. . . . . . . . . . . . . . . . .  D  ADDR  0092H     A   
+EA . . . . . . . . . . . . . . . . .  B  ADDR  00A8H.7   A   
+ERASE_COPY_LOOP. . . . . . . . . . .  C  ADDR  0010H     R   SEG=?PR?ABOOTINIT?A_BOOT
+ERASEFUNCTIONBUFFER. . . . . . . . .  N  NUMB  0800H     A   
+ERASEFUNCTIONBUFFEREND . . . . . . .  C  ADDR  000BH     R   SEG=ABOOT_XDATA
+ERASEFUNCTIONBUFFERSTART . . . . . .  C  ADDR  0000H     R   SEG=ABOOT_XDATA
+FADDRH . . . . . . . . . . . . . . .  N  NUMB  6272H     A   
+FADDRL . . . . . . . . . . . . . . .  N  NUMB  6271H     A   
+FCTL . . . . . . . . . . . . . . . .  N  NUMB  6270H     A   
+FMAP . . . . . . . . . . . . . . . .  D  ADDR  009FH     A   
+MEMCTR . . . . . . . . . . . . . . .  D  ADDR  00C7H     A   
+P1_DIR . . . . . . . . . . . . . . .  D  ADDR  00FEH     A   
+WAITERASELOOP0 . . . . . . . . . . .  C  ADDR  004DH     R   SEG=?PR?ABOOTCOPY?A_BOOT
+WAITERASELOOP1 . . . . . . . . . . .  C  ADDR  0056H     R   SEG=?PR?ABOOTCOPY?A_BOOT
+WDCTL. . . . . . . . . . . . . . . .  D  ADDR  00C9H     A   
+WRITE_CACHE. . . . . . . . . . . . .  N  NUMB  1000H     A   
+WRITE_COPY_LOOP. . . . . . . . . . .  C  ADDR  0036H     R   SEG=?PR?ABOOTINIT?A_BOOT
+WRITEFUNCTIONBUFFER. . . . . . . . .  N  NUMB  08F0H     A   
+WRITEFUNCTIONBUFFEREND . . . . . . .  C  ADDR  0099H     R   SEG=ABOOT_XDATA
+WRITEFUNCTIONBUFFERSTART . . . . . .  C  ADDR  000BH     R   SEG=ABOOT_XDATA
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S).

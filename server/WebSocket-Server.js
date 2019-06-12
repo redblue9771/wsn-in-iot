@@ -18,46 +18,26 @@ const broadcast = (ws, m) => {
 
 wss1.on('connection', function connection(conn) {
     count++;
-    // setInterval(() => {
-    //     broadcast(wss1);
-    // }, 1000);
 
     console.log(`c${count}`)
 
     conn.onopen = () => {
-        const msg = `c${count}`;
-        broadcast(wss1, msg);
+        broadcast(wss1, `c${count}`);
     }
 
     conn.onmessage = m => {
-        wss1.clients.forEach(c => {
-            if (c !== conn && c.readyState === OPEN)
-                c.send(m.data);
-            console.log(m.data);
-        })
+        broadcast(wss1, m.data);
     }
 
     conn.onclose = () => {
         count--;
-        console.log(`count:${count}`)
-        // wss1.clients.forEach(c => {
-        //     const data = {
-        //         type: 1,
-        //         temperature: 50
-        //     }
-        //     if (c !== conn && c.readyState === WebSocket.OPEN)
-        //         c.send(JSON.stringify(data));
-        // })
+        broadcast(wss1, `c${count}`);
     }
 });
 
 wss2.on('connection', function connection(conn) {
     conn.onmessage = m => {
-        wss2.clients.forEach(c => {
-            if (c !== conn && c.readyState === OPEN)
-                c.send(m.data);
-            console.log(m.data)
-        })
+        broadcast(wss1, m.data);
     }
 });
 

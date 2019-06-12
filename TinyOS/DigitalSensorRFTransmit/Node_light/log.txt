@@ -1,0 +1,9 @@
+The 5096+1 line is_more_calls or is_switch_statement;
+The 7987+1 line is_more_calls or is_switch_statement;
+The 8332+1 line is_more_calls or is_switch_statement;
+The 8651+1 line is_more_calls or is_switch_statement;
+The 9549+1 line is_more_calls or is_switch_statement;
+The 9825+1 line is_more_calls or is_switch_statement;
+The 9878+1 line is_more_calls or is_switch_statement;
+The 11119+1 line is_more_calls or is_switch_statement;
+The 11443+1 line is_more_calls or is_switch_statement;

@@ -37,12 +37,9 @@ const useStyles = makeStyles(theme => ({
 function Index() {
 	const classes = useStyles();
 
-	const [data, setData] = useState({
-		count: 0,
-		temperature: 0,
-		humidity: 0,
-		light: 0
-	});
+	const [temperature, setTemperature] = useState(0);
+	const [humidity, setHumidity] = useState(0);
+	const [light, setLight] = useState(0);
 
 	return (
 		<React.Fragment>
@@ -55,8 +52,8 @@ function Index() {
 						alt="icon"
 					/>
 					实时温度 by Temperature Sensor :{" "}
-					{data.temperature ? `${data.temperature}℃` : " - ℃"}
-					<Temperature total={`${data.temperature}%`} />
+					{temperature ? `${temperature}℃` : " - ℃"}
+					<Temperature total={`${temperature}%`} />
 				</Typography>
 				<Divider />
 				<Typography variant="subtitle1" className={classes.Container}>
@@ -66,15 +63,14 @@ function Index() {
 						alt="icon"
 					/>
 					实时湿度 by Humidity Sensor :{" "}
-					{data.humidity ? `${data.humidity}%` : " - "}
-					<Humidity humidity={data.humidity} />
+					{humidity ? `${humidity}%` : " - "}
+					<Humidity humidity={humidity} />
 				</Typography>
 				<Divider />
 				<Typography variant="subtitle1" className={classes.Container}>
 					<img src={LightIcon} className={classes.Icon} alt="icon" />
-					实时光亮 by Light Sensor :{" "}
-					{data.light ? `${data.light}` : " - "}
-					<SunIcon light={data.light} />
+					实时光亮 by Light Sensor : {light ? `${light}` : " - "}
+					<SunIcon light={light} />
 				</Typography>
 				<Divider />
 				{/* <Typography
@@ -91,8 +87,9 @@ function Index() {
 					vertical: "top",
 					horizontal: "right"
 				}}
-				autoHideDuration={1700}>
-				<socketStatus.Provider value={{ data, setData }}>
+				autoHideDuration={1000}>
+				<socketStatus.Provider
+					value={{ setHumidity, setLight, setTemperature }}>
 					<BottomBar />
 				</socketStatus.Provider>
 			</SnackbarProvider>

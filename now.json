@@ -8,9 +8,6 @@
             "distDir": "build"
         }
     }],
-    "github": {
-        "silent": true
-    },
     "routes": [{
         "src": "/static/(.*)",
         "headers": {

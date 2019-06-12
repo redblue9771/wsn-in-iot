@@ -1,0 +1,458 @@
+; .\c-asm.SRC generated from: c-asm.c
+; COMPILER INVOKED BY:
+;        C:\Keil\C51\BIN\C51.exe c-asm.c LARGE OMF2 BROWSE DEBUG SRC(.\c-asm.SRC) PRINT(.\c-asm.lst) OBJECT(.\c-asm.obj) WARNINGLEVEL(0)
+
+$NOMOD51
+
+NAME	C_ASM
+
+WDCTL	DATA	0C9H
+EA	BIT	0A8H.7
+DPH1	DATA	085H
+P0_0	BIT	080H.0
+P0_1	BIT	080H.1
+P2_0	BIT	0A0H.0
+DPL1	DATA	084H
+P2_1	BIT	0A0H.1
+P2_2	BIT	0A0H.2
+P0_4	BIT	080H.4
+P0_5	BIT	080H.5
+P0_6	BIT	080H.6
+P1_6	BIT	090H.6
+P0_7	BIT	080H.7
+P1_7	BIT	090H.7
+P1_DIR	DATA	0FEH
+DPS	DATA	092H
+?PR?_OledP__write_buf?C_ASM              SEGMENT CODE 
+?XD?_OledP__write_buf?C_ASM              SEGMENT XDATA OVERLAYABLE
+?PR?_OledP__write_cmd?C_ASM              SEGMENT CODE 
+?XD?_OledP__write_cmd?C_ASM              SEGMENT XDATA OVERLAYABLE
+?PR?OledP__do_cls?C_ASM                  SEGMENT CODE 
+?PR?_OledP__do_draw_char?C_ASM           SEGMENT CODE 
+?XD?_OledP__do_draw_char?C_ASM           SEGMENT XDATA OVERLAYABLE
+	PUBLIC	?_OledP__do_draw_char?BYTE
+	PUBLIC	_OledP__do_draw_char
+	PUBLIC	OledP__do_cls
+	PUBLIC	_OledP__write_cmd
+	PUBLIC	_OledP__write_buf
+
+	RSEG  ?XD?_OledP__write_cmd?C_ASM
+?_OledP__write_cmd?BYTE:
+        val?141:   DS   1
+
+	RSEG  ?XD?_OledP__write_buf?C_ASM
+?_OledP__write_buf?BYTE:
+        val?040:   DS   1
+
+	RSEG  ?XD?_OledP__do_draw_char?C_ASM
+?_OledP__do_draw_char?BYTE:
+          p?342:   DS   3
+	ORG  3
+         cc?343:   DS   3
+	ORG  6
+         cb?344:   DS   3
+; //#pragma userclass (code = code)
+; 
+; 
+; 
+; 
+; typedef signed char int8_t;
+; typedef short int16_t;
+; typedef long int32_t;
+; typedef unsigned char uint8_t;
+; typedef unsigned short uint16_t;
+; typedef unsigned long uint32_t;
+; 
+; sbit EA = 0xAF;
+; sfr WDCTL = 0xC9;
+; sfr P1_DIR = 0xFE;
+; sfr DPH1 = 0x85;
+; sfr DPL1 = 0x84;
+; sfr DPS = 0x92;
+; 
+; sbit P0_0 = 0x80;
+; sbit P0_1 = 0x81;
+; sbit P0_4 = 0x84;
+; sbit P0_5 = 0x85;
+; sbit P0_6 = 0x86;
+; sbit P0_7 = 0x87;
+; sbit P1_6 = 0x96;
+; sbit P1_7 = 0x97;
+; sbit P2_0 = 0xA0;
+; sbit P2_1 = 0xA1;
+; sbit P2_2 = 0xA2;
+; 
+; #pragma asm
+  
+  #if 0
+  OLED_CLK_PIN 	EQU P0_1  
+  OLED_DATA_PIN 	EQU P0_0
+  OLED_RESET_PIN 	EQU P0_4
+  OLED_DC_PIN 	EQU P2_0
+  OLED_CS_PIN 	EQU P1_7
+  #else
+  /*
+  OLED_CLK_PIN 	EQU P2_2
+  OLED_DATA_PIN 	EQU P2_1
+  //OLED_CLK_PIN 	EQU P0_6
+  //OLED_DATA_PIN 	EQU P0_7
+  OLED_RESET_PIN 	EQU P2_0
+  OLED_DC_PIN 	EQU P0_1
+  OLED_CS_PIN 	EQU P0_0
+  */
+  OLED_CLK_PIN 	EQU P0_6
+  OLED_DATA_PIN 	EQU P0_7
+  OLED_RESET_PIN 	EQU P0_0
+  OLED_DC_PIN 	EQU P0_1
+  OLED_CS_PIN 	EQU P0_5
+  #endif
+  	//;;*********************************
+  	//;;	_oled_write_cmd
+  	//;;*********************************
+  	
+  	//;;we put data into R2, R3 uses to loop
+  	
+  CASM 	SEGMENT CODE
+  		RSEG	CASM 	
+  
+  	USING 0	 
+  
+  _oled_write_cmd:	
+  	SETB	OLED_CS_PIN
+  	CLR		OLED_CLK_PIN
+  	CLR		OLED_DATA_PIN
+  	CLR		OLED_DC_PIN
+  	
+  	CLR		OLED_CS_PIN
+  	
+  	MOV		A,R2
+  	PUSH	AR3
+  	MOV		R3,#8
+  _oled_write_cmd_loop:
+  	RLC		A
+  	JC		_oled_write_cmd_bit_high
+  	
+  _oled_write_cmd_bit_low:
+  	CLR		OLED_DATA_PIN
+  	AJMP	_oled_write_cmd_bit_end
+  	
+  _oled_write_cmd_bit_high:
+  	SETB	OLED_DATA_PIN
+  	
+  _oled_write_cmd_bit_end:
+  	CLR		OLED_CLK_PIN	
+  	SETB	OLED_CLK_PIN
+  	
+  	DJNZ	R3, _oled_write_cmd_loop
+  	
+  	POP		AR3
+  	
+  	SETB	OLED_CS_PIN
+  	CLR		OLED_DATA_PIN
+  	CLR		OLED_CLK_PIN
+  	CLR		OLED_DC_PIN
+  	//;; return
+  	RET
+  
+  	//;;*********************************
+  	//;;	_oled_write_date
+  	//;;*********************************
+  	
+  _oled_write_data:
+  	//;;we put data into R2, R3 uses to loop
+  	SETB	OLED_CS_PIN
+  	CLR		OLED_CLK_PIN
+  	CLR		OLED_DATA_PIN
+  	SETB	OLED_DC_PIN
+  	CLR		OLED_CS_PIN
+  	
+  	MOV		A,R2
+  	PUSH	AR3
+  	MOV		R3,#8
+  _oled_write_data_loop:
+  	RLC		A
+  	JC		_oled_write_data_bit_high
+  	
+  _oled_write_data_bit_low:
+  	CLR		OLED_DATA_PIN
+  	AJMP	_oled_write_data_bit_end
+  	
+  _oled_write_data_bit_high:
+  	SETB	OLED_DATA_PIN
+  	
+  _oled_write_data_bit_end:
+  	CLR		OLED_CLK_PIN
+  	SETB	OLED_CLK_PIN
+  	
+  	DJNZ	R3, _oled_write_data_loop
+  	
+  	POP		AR3
+  	
+  	SETB	OLED_CS_PIN
+  	CLR		OLED_DATA_PIN
+  	CLR		OLED_CLK_PIN
+  	CLR		OLED_DC_PIN
+  	//;; return
+  	RET
+  
+; #pragma endasm
+; 
+; void OledP__write_buf(uint8_t val)
+
+	RSEG  ?PR?_OledP__write_buf?C_ASM
+_OledP__write_buf:
+	USING	0
+			; SOURCE LINE # 147
+	MOV  	DPTR,#val?040
+	MOV  	A,R7
+	MOVX 	@DPTR,A
+; {
+			; SOURCE LINE # 148
+; 
+; #pragma asm
+; 	PUSH	AR2	 
+	  PUSH	AR2	 
+; 	MOV		A,R7
+	  MOV		A,R7
+; 	MOV		 R2,A	
+	  MOV		 R2,A	
+; 	LCALL _oled_write_data
+	  LCALL _oled_write_data
+; 	POP 	AR2
+	  POP 	AR2
+; #pragma endasm
+; 	
+; }
+			; SOURCE LINE # 158
+	RET  	
+; END OF _OledP__write_buf
+
+; 
+; void OledP__write_cmd(uint8_t val)
+
+	RSEG  ?PR?_OledP__write_cmd?C_ASM
+_OledP__write_cmd:
+	USING	0
+			; SOURCE LINE # 160
+	MOV  	DPTR,#val?141
+	MOV  	A,R7
+	MOVX 	@DPTR,A
+; {
+			; SOURCE LINE # 161
+; 
+; #pragma asm
+; 	PUSH	AR2	 
+	  PUSH	AR2	 
+; 	MOV		A,R7
+	  MOV		A,R7
+; 	MOV		 R2,A	
+	  MOV		 R2,A	
+; 	LCALL _oled_write_cmd
+	  LCALL _oled_write_cmd
+; 	POP 	AR2
+	  POP 	AR2
+; #pragma endasm
+; 	
+; }
+			; SOURCE LINE # 171
+	RET  	
+; END OF _OledP__write_cmd
+
+; 
+; void OledP__do_cls()
+
+	RSEG  ?PR?OledP__do_cls?C_ASM
+OledP__do_cls:
+	USING	0
+			; SOURCE LINE # 173
+; {
+			; SOURCE LINE # 174
+; 	
+; #pragma asm
+; 
+	  
+; 	SETB	OLED_CS_PIN
+	  SETB	OLED_CS_PIN
+; 	CLR		OLED_CLK_PIN
+	  CLR		OLED_CLK_PIN
+; 	CLR		OLED_DATA_PIN
+	  CLR		OLED_DATA_PIN
+; 	SETB	OLED_DC_PIN
+	  SETB	OLED_DC_PIN
+; 	CLR		OLED_CS_PIN
+	  CLR		OLED_CS_PIN
+; 	
+	  
+; _oled_do_cls:
+	  _oled_do_cls:
+; 	MOV 	R5,#128
+	  MOV 	R5,#128
+; _oled_do_cls_loop_big:	
+	  _oled_do_cls_loop_big:	
+; 	MOV 	R4,#128	
+	  MOV 	R4,#128	
+; _oled_do_cls_loop_small:	
+	  _oled_do_cls_loop_small:	
+; 	MOV		R3,#16
+	  MOV		R3,#16
+; _oled_do_cls_loop_byte:
+	  _oled_do_cls_loop_byte:
+; 	
+	  
+; 	CLR		OLED_CLK_PIN
+	  CLR		OLED_CLK_PIN
+; 	SETB	OLED_CLK_PIN
+	  SETB	OLED_CLK_PIN
+; 
+	  
+; 	NOP
+	  NOP
+; 	NOP
+	  NOP
+; 	NOP
+	  NOP
+; 	NOP
+	  NOP
+; 	NOP
+	  NOP
+; 	NOP
+	  NOP
+; 	NOP
+	  NOP
+; 	NOP
+	  NOP
+; 	
+	  
+; 	CLR		OLED_DATA_PIN
+	  CLR		OLED_DATA_PIN
+; 	
+	  
+; 	DJNZ	R3, _oled_do_cls_loop_byte
+	  DJNZ	R3, _oled_do_cls_loop_byte
+; 	DJNZ	R4, _oled_do_cls_loop_small
+	  DJNZ	R4, _oled_do_cls_loop_small
+; 	DJNZ	R5, _oled_do_cls_loop_big
+	  DJNZ	R5, _oled_do_cls_loop_big
+; 	
+	  
+; 	SETB	OLED_CS_PIN
+	  SETB	OLED_CS_PIN
+; 	CLR		OLED_DATA_PIN
+	  CLR		OLED_DATA_PIN
+; 	CLR		OLED_CLK_PIN
+	  CLR		OLED_CLK_PIN
+; 	CLR		OLED_DC_PIN	
+	  CLR		OLED_DC_PIN	
+; 	
+	  
+; #pragma endasm
+; }
+			; SOURCE LINE # 216
+	RET  	
+; END OF OledP__do_cls
+
+; 
+; void OledP__do_draw_char(uint8_t *p, uint8_t *cc, uint8_t *cb)
+
+	RSEG  ?PR?_OledP__do_draw_char?C_ASM
+_OledP__do_draw_char:
+	USING	0
+			; SOURCE LINE # 218
+	MOV  	DPTR,#p?342
+	MOV  	A,R3
+	MOVX 	@DPTR,A
+	INC  	DPTR
+	MOV  	A,R2
+	MOVX 	@DPTR,A
+	INC  	DPTR
+	MOV  	A,R1
+	MOVX 	@DPTR,A
+; {
+			; SOURCE LINE # 219
+; 	// p -> R3 ,  cc -> R2 , cb -> R1
+; 
+; #pragma asm
+; 	
+	  
+; 	MOV 	R5,#16
+	  MOV 	R5,#16
+; _do_draw_byte_loop:
+	  _do_draw_byte_loop:
+; 	MOV		A,R3	
+	  MOV		A,R3	
+; 	MOV		R0,A
+	  MOV		R0,A
+; 	MOVX 	A,@R0
+	  MOVX 	A,@R0
+; 	INC		R3
+	  INC		R3
+; 	MOV		R4,#8
+	  MOV		R4,#8
+; _do_draw_bit_loop:
+	  _do_draw_bit_loop:
+; 	RLC		A
+	  RLC		A
+; 	JC		_do_draw_bit_loop_high
+	  JC		_do_draw_bit_loop_high
+; _do_draw_bit_loop_low:
+	  _do_draw_bit_loop_low:
+; 	PUSH	ACC
+	  PUSH	ACC
+; 	MOV		A,R2	
+	  MOV		A,R2	
+; 	MOV		R0,A	
+	  MOV		R0,A	
+; 	AJMP	_do_draw_bit_loop_end
+	  AJMP	_do_draw_bit_loop_end
+; _do_draw_bit_loop_high:
+	  _do_draw_bit_loop_high:
+; 	PUSH	ACC
+	  PUSH	ACC
+; 	MOV		A,R1	
+	  MOV		A,R1	
+; 	MOV		R0,A	
+	  MOV		R0,A	
+; _do_draw_bit_loop_end:
+	  _do_draw_bit_loop_end:
+; 	PUSH 	AR2
+	  PUSH 	AR2
+; 	MOVX 	A,@R0
+	  MOVX 	A,@R0
+; 	MOV		R2,A
+	  MOV		R2,A
+; 	LCALL 	_oled_write_data
+	  LCALL 	_oled_write_data
+; 	INC		R0
+	  INC		R0
+; 	MOVX 	A,@R0
+	  MOVX 	A,@R0
+; 	MOV		R2,A
+	  MOV		R2,A
+; 	LCALL 	_oled_write_data
+	  LCALL 	_oled_write_data
+; 	INC		R0
+	  INC		R0
+; 	MOVX 	A,@R0	
+	  MOVX 	A,@R0	
+; 	MOV		R2,A
+	  MOV		R2,A
+; 	LCALL 	_oled_write_data
+	  LCALL 	_oled_write_data
+; 	POP 	AR2
+	  POP 	AR2
+; 	POP 	ACC
+	  POP 	ACC
+; 	DJNZ	R4, _do_draw_bit_loop
+	  DJNZ	R4, _do_draw_bit_loop
+; 	DJNZ	R5, _do_draw_byte_loop
+	  DJNZ	R5, _do_draw_byte_loop
+; 	
+	  
+; #pragma endasm	
+; 	
+; }
+			; SOURCE LINE # 263
+	RET  	
+; END OF _OledP__do_draw_char
+
+	END
