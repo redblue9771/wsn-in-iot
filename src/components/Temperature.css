@@ -1,43 +1,43 @@
 .thermometer {
-    margin-top: 1em;
-    padding: 0 1em;
+  margin-top: 1em;
+  padding: 0 1em;
 }
 
 .thermometer span {
-    font-size: 1rem;
-    color: #aaa;
-    min-width: 100%;
-    text-align: center;
-    display: block;
-    margin-bottom: 1.25rem;
+  font-size: 1rem;
+  color: #aaa;
+  min-width: 100%;
+  text-align: center;
+  display: block;
+  margin-bottom: 1.25rem;
 }
 
 .thermometer .liquid {
-    display: block;
-    width: 100%;
-    height: 0.7rem;
-    border: 1px solid #d2d2d2;
-    border-radius: 10px;
-    margin: 0.25rem auto 0;
-    position: relative;
+  display: block;
+  width: 100%;
+  height: 0.7rem;
+  border: 1px solid #d2d2d2;
+  border-radius: 10px;
+  margin: 0.25rem auto 0;
+  position: relative;
 }
 
 .thermometer .liquid div {
-    position: absolute;
-    width: 100%;
-    height: 70%;
-    left: 1px;
-    top: 14%;
-    border-radius: 10px;
-    -webkit-transition: width 0.3s ease;
-    transition: width 0.3s ease;
-    background: linear-gradient(45deg, yellow, blue);
+  position: absolute;
+  width: 100%;
+  height: 70%;
+  left: 1px;
+  top: 14%;
+  border-radius: 10px;
+  -webkit-transition: width 0.3s ease;
+  transition: width 0.3s ease;
+  background: linear-gradient(45deg, yellow, blue);
 }
 
 .thermometer .ruler {
-    height: 0.625rem;
-    width: 100%;
-    margin-left: 2px;
+  height: 0.625rem;
+  width: 100%;
+  margin-left: 2px;
 }
 
 .thermometer .ruler .ticks--very-low line,
@@ -70,8 +70,8 @@
 .thermometer--moderate .ruler .ticks--very-high line,
 .thermometer--high .ruler .ticks--very-high line,
 .thermometer--very-high .ruler .ticks--very-high line {
-    stroke-width: 2px;
-    shape-rendering: crispEdges;
+  stroke-width: 2px;
+  shape-rendering: crispEdges;
 }
 
 .thermometer .ruler .ticks--very-low,
@@ -80,7 +80,7 @@
 .thermometer--moderate .ruler .ticks--very-low,
 .thermometer--high .ruler .ticks--very-low,
 .thermometer--very-high .ruler .ticks--very-low {
-    stroke: #249aa7;
+  stroke: #249aa7;
 }
 
 .thermometer .ruler .ticks--low,
@@ -89,7 +89,7 @@
 .thermometer--moderate .ruler .ticks--low,
 .thermometer--high .ruler .ticks--low,
 .thermometer--very-high .ruler .ticks--low {
-    stroke: #b8e1f2;
+  stroke: #b8e1f2;
 }
 
 .thermometer .ruler .ticks--moderate,
@@ -98,7 +98,7 @@
 .thermometer--moderate .ruler .ticks--moderate,
 .thermometer--high .ruler .ticks--moderate,
 .thermometer--very-high .ruler .ticks--moderate {
-    stroke: #abd25e;
+  stroke: #abd25e;
 }
 
 .thermometer .ruler .ticks--high,
@@ -107,7 +107,7 @@
 .thermometer--moderate .ruler .ticks--high,
 .thermometer--high .ruler .ticks--high,
 .thermometer--very-high .ruler .ticks--high {
-    stroke: #f8c830;
+  stroke: #f8c830;
 }
 
 .thermometer .ruler .ticks--very-high,
@@ -116,5 +116,5 @@
 .thermometer--moderate .ruler .ticks--very-high,
 .thermometer--high .ruler .ticks--very-high,
 .thermometer--very-high .ruler .ticks--very-high {
-    stroke: #f1594a;
+  stroke: #f1594a;
 }

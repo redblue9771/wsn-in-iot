@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.4.2",
-    "@material-ui/icons": "^4.4.1",
-    "apexcharts": "^3.8.6",
-    "notistack": "^0.9.0",
-    "react": "^16.9.0",
-    "react-apexcharts": "^1.3.3",
-    "react-dom": "^16.9.0",
-    "react-markdown": "^4.2.2",
-    "react-scripts": "^3.1.1"
+    "@material-ui/core": "latest",
+    "@material-ui/icons": "latest",
+    "apexcharts": "latest",
+    "clsx": "^1.0.4",
+    "notistack": "latest",
+    "react": "latest",
+    "react-apexcharts": "latest",
+    "react-dom": "latest",
+    "react-markdown": "latest",
+    "react-scripts": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,5 +30,34 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.6.0",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-import-resolver-webpack": "^0.11.1",
+    "eslint-plugin-flowtype": "^4.4.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "husky": "^3.1.0",
+    "lint-staged": "^9.4.3",
+    "prettier": "^1.19.1",
+    "prettier-eslint-cli": "^4.7.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,css}": [
+      "prettier-eslint --write",
+      "git add"
+    ]
+  }
 }
