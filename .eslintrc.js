@@ -9,6 +9,7 @@ module.exports = {
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
+    React: 'readable',
   },
   parserOptions: {
     ecmaFeatures: {
@@ -36,6 +37,7 @@ module.exports = {
         bracketSpacing: true,
         trailingComma: 'es5',
         arrowParens: 'always',
+        printWidth: 100,
       },
     ],
     'react/jsx-filename-extension': [
